@@ -8,11 +8,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v4
+  
       - name: Start Stremio Docker container
         run: |
           docker run -d \
             --name stremio-server \
-            -p 3000:3000 \
+            -p 11470:11470 \
             stremio/stremio-server
 
       - name: Install cloudflared
