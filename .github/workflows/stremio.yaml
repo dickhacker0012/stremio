@@ -15,7 +15,7 @@ jobs:
           docker run -d \
             --name stremio-server \
             -p 11470:11470 \
-            stremio/stremio-server
+            stremio/server
 
       - name: Install cloudflared
         run: |
@@ -24,4 +24,4 @@ jobs:
           sudo mv cloudflared-linux-amd64 /usr/local/bin/cloudflared
 
       - name: Start Cloudflare Tunnel to Stremio
-        run: cloudflared tunnel --url http://localhost:3000
+        run: cloudflared tunnel --url http://localhost:11470
