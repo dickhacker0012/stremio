@@ -1,21 +1,16 @@
-name: Run Stremio with Cloudflare Tunnel
+name: Temporary Stremio Server
 
 on:
   workflow_dispatch:
 
 jobs:
-  stremio:
+  launch-server:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-  
-      - name: Start Stremio Docker container
+      - name: Start Stremio Docker Container
         run: |
-          docker run -d \
-            --name stremio-server \
-            -p 11470:11470 \
-            stremio/server
+          docker run -d --name stremio-server -p 11470:11470 stremio/server
 
       - name: Install cloudflared
         run: |
@@ -23,5 +18,7 @@ jobs:
           chmod +x cloudflared-linux-amd64
           sudo mv cloudflared-linux-amd64 /usr/local/bin/cloudflared
 
-      - name: Start Cloudflare Tunnel to Stremio
-        run: cloudflared tunnel --url http://localhost:11470
+      - name: Create Cloudflare Tunnel
+        run: |
+          cloudflared --version
+          cloudflared tunnel --url http://localhost:11470
