@@ -12,13 +12,17 @@ jobs:
         run: |
           docker run -d --name stremio-server -p 11470:11470 stremio/server
 
-      - name: Install cloudflared
+      - name: Create localhost.run Tunnel
         run: |
-          wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
-          chmod +x cloudflared-linux-amd64
-          sudo mv cloudflared-linux-amd64 /usr/local/bin/cloudflared
+          ssh -R 80:localhost:11470 -o StrictHostKeyChecking=no nokey@localhost.run
 
-      - name: Create Cloudflare Tunnel
-        run: |
-          cloudflared --version
-          cloudflared tunnel --url http://localhost:11470
+      # - name: Install cloudflared
+      #   run: |
+      #     wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
+      #     chmod +x cloudflared-linux-amd64
+      #     sudo mv cloudflared-linux-amd64 /usr/local/bin/cloudflared
+
+      # - name: Create Cloudflare Tunnel
+      #   run: |
+      #     cloudflared --version
+      #     cloudflared tunnel --url http://localhost:11470
