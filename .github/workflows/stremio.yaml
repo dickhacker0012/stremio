@@ -25,4 +25,4 @@ jobs:
       - name: Create Cloudflare Tunnel
         run: |
           cloudflared --version
-      #     cloudflared tunnel --url http://localhost:11470
+          cloudflared tunnel --url http://localhost:11470
